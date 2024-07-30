@@ -8,12 +8,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Climbing
   - Water
   - UI
   - Ground
-  - 
-  - 
+  - Player
+  - BackGround
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: Platforms
     uniqueID: 2105992859
+    locked: 0
+  - name: Ladders
+    uniqueID: 2597056675
     locked: 0
   - name: Player
     uniqueID: 3142281103

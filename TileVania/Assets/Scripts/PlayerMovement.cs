@@ -6,12 +6,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] float playerSpeed = 5f;
+    [SerializeField] float playerJumpForce = 5f;
+    [SerializeField] float climbingSpeed = 5f;
+
     Vector2 moveInput;
     Rigidbody2D playerRB;
-    [SerializeField] float playerSpeed = 5f;
     Animator myAnimator;
-    [SerializeField] float playerJumpForce = 5f;
     CapsuleCollider2D playerCapsuleCollider2D;
+    float gravityScaleAtStart;
     
 
     void Start()
@@ -19,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();  
         playerCapsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        gravityScaleAtStart = playerRB.gravityScale;
     }
 
     
@@ -26,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Run();
         FlipSprite();
+        OnClimbing();
     }
 
     void OnMove(InputValue value)
@@ -52,17 +57,49 @@ public class PlayerMovement : MonoBehaviour
         }
      }
 
-    //player jumping 
 
+
+    //player jumping 
     void OnJump(InputValue value)
     {
         // Checks whether the player is touching the Ground or not
-        if (!playerCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return; }
+        if (!playerCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            return; 
+        }
 
         if (value.isPressed)
         {
             playerRB.velocity += new Vector2(0f, playerJumpForce);
         }
 
+    }
+
+    //Player climbing the Ladder
+
+    void OnClimbing()
+    {
+
+        if (!playerCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        {
+            playerRB.gravityScale = gravityScaleAtStart;
+            myAnimator.SetBool("isClimbing", false);
+            return;
+        }
+
+        Vector2 climbingVelocity = new Vector2(playerRB.velocity.x, moveInput.y * climbingSpeed);
+        playerRB.velocity = climbingVelocity;
+        playerRB.gravityScale = 0;
+
+        if (Mathf.Abs(playerRB.velocity.y) > Mathf.Epsilon)
+        {
+            myAnimator.SetBool("isClimbing", true);
+        }
+        else
+        {
+            myAnimator.SetBool("isClimbing", false);
+        }
+        
+        
     }
 }
