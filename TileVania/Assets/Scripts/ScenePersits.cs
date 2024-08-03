@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScenePersits : MonoBehaviour
 {
+
+    //Scene Persits
     private void Awake()
     {
         int numScenePersisits = FindObjectsOfType<GameSession>().Length;
