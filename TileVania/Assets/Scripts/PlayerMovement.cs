@@ -124,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
             isAlive = false;
             myAnimator.SetTrigger("Dying");
             playerRB.velocity = deathKick;
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
             //playerCapsuleCollider2D.enabled = false;
         }
     }
