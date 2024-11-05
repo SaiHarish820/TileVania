@@ -21,7 +21,6 @@ Welcome to the 2D Game Projects repository! This collection showcases various 2D
      1. **Character Movement**: Player can run and jump.
      2. **Traps/Obstacles:** Instantly kills the player.
      3. **Level Loading**: A way to finish the level and start the next level.
-     4. **Countdown Timer:** Some system to create time urgency.
    - Status: In Progress
 
 ## Installation
